@@ -1,0 +1,108 @@
+@model GameRecommendationSystem.Models.Game
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Developer" class="control-label"></label>
+                <input asp-for="Developer" class="form-control" />
+                <span asp-validation-for="Developer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Publisher" class="control-label"></label>
+                <input asp-for="Publisher" class="form-control" />
+                <span asp-validation-for="Publisher" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReleaseDate" class="control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EstimatedPlaytimeHours" class="control-label"></label>
+                <input asp-for="EstimatedPlaytimeHours" class="form-control" />
+                <span asp-validation-for="EstimatedPlaytimeHours" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AgeRating" class="control-label"></label>
+                <input asp-for="AgeRating" class="form-control" />
+                <span asp-validation-for="AgeRating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <input asp-for="IsActive" class="form-check-input" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GameGenres" class="control-label"></label>
+                <input asp-for="GameGenres" class="form-control" />
+                <span asp-validation-for="GameGenres" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GamePlatforms" class="control-label"></label>
+                <input asp-for="GamePlatforms" class="form-control" />
+                <span asp-validation-for="GamePlatforms" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Reviews" class="control-label"></label>
+                <input asp-for="Reviews" class="form-control" />
+                <span asp-validation-for="Reviews" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Favorites" class="control-label"></label>
+                <input asp-for="Favorites" class="form-control" />
+                <span asp-validation-for="Favorites" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RecommendationHistory" class="control-label"></label>
+                <input asp-for="RecommendationHistory" class="form-control" />
+                <span asp-validation-for="RecommendationHistory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
