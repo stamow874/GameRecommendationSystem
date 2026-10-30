@@ -22,6 +22,318 @@ namespace GameRecommendationSystem.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GameRecommendationSystem.Models.FavoriteGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId", "GameId")
+                        .IsUnique();
+
+                    b.ToTable("FavoriteGames");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AgeRating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Developer")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("EstimatedPlaytimeHours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PublisherId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PublisherId");
+
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.GameGenre", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("GameGenres");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.GamePlatform", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "PlatformId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("GamePlatforms");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.GameReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId", "GameId")
+                        .IsUnique();
+
+                    b.ToTable("GameReviews");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Platform", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Platforms");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Publisher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Publishers");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.RecommendationHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MatchPercentage")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("RecommendedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RecommendationHistories");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AvailableMinutesPerSession")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MinimumAgeRating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlayStyle")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PreferredMood")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserPreferences");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreferredGenre", b =>
+                {
+                    b.Property<int>("UserPreferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserPreferenceId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("UserPreferredGenres");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreferredPlatform", b =>
+                {
+                    b.Property<int>("UserPreferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserPreferenceId", "PlatformId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("UserPreferredPlatforms");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -224,6 +536,152 @@ namespace GameRecommendationSystem.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GameRecommendationSystem.Models.FavoriteGame", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Game", "Game")
+                        .WithMany("Favorites")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Game", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Publisher", "Publisher")
+                        .WithMany("Games")
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.GameGenre", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Game", "Game")
+                        .WithMany("GameGenres")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameRecommendationSystem.Models.Genre", "Genre")
+                        .WithMany("GameGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.GamePlatform", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Game", "Game")
+                        .WithMany("GamePlatforms")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameRecommendationSystem.Models.Platform", "Platform")
+                        .WithMany("GamePlatforms")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Platform");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.GameReview", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Game", "Game")
+                        .WithMany("Reviews")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.RecommendationHistory", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Game", "Game")
+                        .WithMany("RecommendationHistory")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreference", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithOne()
+                        .HasForeignKey("GameRecommendationSystem.Models.UserPreference", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreferredGenre", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Genre", "Genre")
+                        .WithMany("UserPreferredGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameRecommendationSystem.Models.UserPreference", "UserPreference")
+                        .WithMany("PreferredGenres")
+                        .HasForeignKey("UserPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("UserPreference");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreferredPlatform", b =>
+                {
+                    b.HasOne("GameRecommendationSystem.Models.Platform", "Platform")
+                        .WithMany("UserPreferredPlatforms")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameRecommendationSystem.Models.UserPreference", "UserPreference")
+                        .WithMany("PreferredPlatforms")
+                        .HasForeignKey("UserPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Platform");
+
+                    b.Navigation("UserPreference");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -273,6 +731,45 @@ namespace GameRecommendationSystem.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Game", b =>
+                {
+                    b.Navigation("Favorites");
+
+                    b.Navigation("GameGenres");
+
+                    b.Navigation("GamePlatforms");
+
+                    b.Navigation("RecommendationHistory");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Genre", b =>
+                {
+                    b.Navigation("GameGenres");
+
+                    b.Navigation("UserPreferredGenres");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Platform", b =>
+                {
+                    b.Navigation("GamePlatforms");
+
+                    b.Navigation("UserPreferredPlatforms");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.Publisher", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("GameRecommendationSystem.Models.UserPreference", b =>
+                {
+                    b.Navigation("PreferredGenres");
+
+                    b.Navigation("PreferredPlatforms");
                 });
 #pragma warning restore 612, 618
         }

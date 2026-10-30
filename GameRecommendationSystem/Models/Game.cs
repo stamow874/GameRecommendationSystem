@@ -16,8 +16,9 @@ public class Game
     [StringLength(100)]
     public string? Developer { get; set; }
 
-    [StringLength(100)]
-    public string? Publisher { get; set; }
+    public int? PublisherId { get; set; }
+
+    public Publisher? Publisher { get; set; }
 
     public DateTime? ReleaseDate { get; set; }
 

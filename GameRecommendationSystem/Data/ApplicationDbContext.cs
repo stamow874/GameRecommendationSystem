@@ -24,8 +24,8 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<UserPreferredPlatform> UserPreferredPlatforms => Set<UserPreferredPlatform>();
     public DbSet<GameReview> GameReviews => Set<GameReview>();
     public DbSet<FavoriteGame> FavoriteGames => Set<FavoriteGame>();
-    public DbSet<RecommendationHistory> RecommendationHistories
-        => Set<RecommendationHistory>();
+    public DbSet<RecommendationHistory> RecommendationHistories => Set<RecommendationHistory>();
+    public DbSet<Publisher> Publishers => Set<Publisher>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -165,5 +165,12 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
         builder.Entity<Platform>()
             .HasIndex(x => x.Name)
             .IsUnique();
+
+        // Един издател може да има много игри.
+        builder.Entity<Game>()
+            .HasOne(x => x.Publisher)
+            .WithMany(x => x.Games)
+            .HasForeignKey(x => x.PublisherId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

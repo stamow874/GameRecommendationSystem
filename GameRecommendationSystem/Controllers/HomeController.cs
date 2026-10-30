@@ -1,6 +1,18 @@
-﻿namespace GameRecommendationSystem.Controllers
+﻿
+using Microsoft.AspNetCore.Mvc;
+
+namespace GameRecommendationSystem.Controllers
 {
-    public class HomeController
+    public class HomeController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }

@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using GameRecommendationSystem.Models;
 using GameRecommendationSystem.Data;
 
-public class Games1Controller : Controller
+public class GenresController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public Games1Controller(ApplicationDbContext context)
+    public GenresController(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    // GET: GAMES
+    // GET: GENRES
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Games.ToListAsync());
+        return View(await _context.Genres.ToListAsync());
     }
 
-    // GET: GAMES/Details/5
+    // GET: GENRES/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -27,39 +27,39 @@ public class Games1Controller : Controller
             return NotFound();
         }
 
-        var game = await _context.Games
+        var genre = await _context.Genres
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (game == null)
+        if (genre == null)
         {
             return NotFound();
         }
 
-        return View(game);
+        return View(genre);
     }
 
-    // GET: GAMES/Create
+    // GET: GENRES/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: GAMES/Create
+    // POST: GENRES/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,Description,Developer,Publisher,ReleaseDate,EstimatedPlaytimeHours,AgeRating,ImageUrl,IsActive,GameGenres,GamePlatforms,Reviews,Favorites,RecommendationHistory")] Game game)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,GameGenres,UserPreferredGenres")] Genre genre)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(game);
+            _context.Add(genre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(game);
+        return View(genre);
     }
 
-    // GET: GAMES/Edit/5
+    // GET: GENRES/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -67,22 +67,22 @@ public class Games1Controller : Controller
             return NotFound();
         }
 
-        var game = await _context.Games.FindAsync(id);
-        if (game == null)
+        var genre = await _context.Genres.FindAsync(id);
+        if (genre == null)
         {
             return NotFound();
         }
-        return View(game);
+        return View(genre);
     }
 
-    // POST: GAMES/Edit/5
+    // POST: GENRES/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,Developer,Publisher,ReleaseDate,EstimatedPlaytimeHours,AgeRating,ImageUrl,IsActive,GameGenres,GamePlatforms,Reviews,Favorites,RecommendationHistory")] Game game)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Description,GameGenres,UserPreferredGenres")] Genre genre)
     {
-        if (id != game.Id)
+        if (id != genre.Id)
         {
             return NotFound();
         }
@@ -91,12 +91,12 @@ public class Games1Controller : Controller
         {
             try
             {
-                _context.Update(game);
+                _context.Update(genre);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(game.Id))
+                if (!GenreExists(genre.Id))
                 {
                     return NotFound();
                 }
@@ -107,10 +107,10 @@ public class Games1Controller : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(game);
+        return View(genre);
     }
 
-    // GET: GAMES/Delete/5
+    // GET: GENRES/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -118,33 +118,33 @@ public class Games1Controller : Controller
             return NotFound();
         }
 
-        var game = await _context.Games
+        var genre = await _context.Genres
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (game == null)
+        if (genre == null)
         {
             return NotFound();
         }
 
-        return View(game);
+        return View(genre);
     }
 
-    // POST: GAMES/Delete/5
+    // POST: GENRES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var game = await _context.Games.FindAsync(id);
-        if (game != null)
+        var genre = await _context.Genres.FindAsync(id);
+        if (genre != null)
         {
-            _context.Games.Remove(game);
+            _context.Genres.Remove(genre);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool GameExists(int? id)
+    private bool GenreExists(int? id)
     {
-        return _context.Games.Any(e => e.Id == id);
+        return _context.Genres.Any(e => e.Id == id);
     }
 }

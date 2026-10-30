@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using GameRecommendationSystem.Models;
 using GameRecommendationSystem.Data;
 
-public class Genres1Controller : Controller
+public class PlatformsController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public Genres1Controller(ApplicationDbContext context)
+    public PlatformsController(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    // GET: GENRES
+    // GET: PLATFORMS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Genres.ToListAsync());
+        return View(await _context.Platforms.ToListAsync());
     }
 
-    // GET: GENRES/Details/5
+    // GET: PLATFORMS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -27,39 +27,39 @@ public class Genres1Controller : Controller
             return NotFound();
         }
 
-        var genre = await _context.Genres
+        var platform = await _context.Platforms
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (genre == null)
+        if (platform == null)
         {
             return NotFound();
         }
 
-        return View(genre);
+        return View(platform);
     }
 
-    // GET: GENRES/Create
+    // GET: PLATFORMS/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: GENRES/Create
+    // POST: PLATFORMS/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Description,GameGenres,UserPreferredGenres")] Genre genre)
+    public async Task<IActionResult> Create([Bind("Id,Name,GamePlatforms,UserPreferredPlatforms")] Platform platform)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(genre);
+            _context.Add(platform);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(genre);
+        return View(platform);
     }
 
-    // GET: GENRES/Edit/5
+    // GET: PLATFORMS/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -67,22 +67,22 @@ public class Genres1Controller : Controller
             return NotFound();
         }
 
-        var genre = await _context.Genres.FindAsync(id);
-        if (genre == null)
+        var platform = await _context.Platforms.FindAsync(id);
+        if (platform == null)
         {
             return NotFound();
         }
-        return View(genre);
+        return View(platform);
     }
 
-    // POST: GENRES/Edit/5
+    // POST: PLATFORMS/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Description,GameGenres,UserPreferredGenres")] Genre genre)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,GamePlatforms,UserPreferredPlatforms")] Platform platform)
     {
-        if (id != genre.Id)
+        if (id != platform.Id)
         {
             return NotFound();
         }
@@ -91,12 +91,12 @@ public class Genres1Controller : Controller
         {
             try
             {
-                _context.Update(genre);
+                _context.Update(platform);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GenreExists(genre.Id))
+                if (!PlatformExists(platform.Id))
                 {
                     return NotFound();
                 }
@@ -107,10 +107,10 @@ public class Genres1Controller : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(genre);
+        return View(platform);
     }
 
-    // GET: GENRES/Delete/5
+    // GET: PLATFORMS/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -118,33 +118,33 @@ public class Genres1Controller : Controller
             return NotFound();
         }
 
-        var genre = await _context.Genres
+        var platform = await _context.Platforms
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (genre == null)
+        if (platform == null)
         {
             return NotFound();
         }
 
-        return View(genre);
+        return View(platform);
     }
 
-    // POST: GENRES/Delete/5
+    // POST: PLATFORMS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var genre = await _context.Genres.FindAsync(id);
-        if (genre != null)
+        var platform = await _context.Platforms.FindAsync(id);
+        if (platform != null)
         {
-            _context.Genres.Remove(genre);
+            _context.Platforms.Remove(platform);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool GenreExists(int? id)
+    private bool PlatformExists(int? id)
     {
-        return _context.Genres.Any(e => e.Id == id);
+        return _context.Platforms.Any(e => e.Id == id);
     }
 }

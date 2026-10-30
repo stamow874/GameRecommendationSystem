@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using GameRecommendationSystem.Models;
 using GameRecommendationSystem.Data;
 
-public class Platforms1Controller : Controller
+public class PublishersController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public Platforms1Controller(ApplicationDbContext context)
+    public PublishersController(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    // GET: PLATFORMS
+    // GET: PUBLISHERS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Platforms.ToListAsync());
+        return View(await _context.Publishers.ToListAsync());
     }
 
-    // GET: PLATFORMS/Details/5
+    // GET: PUBLISHERS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -27,39 +27,39 @@ public class Platforms1Controller : Controller
             return NotFound();
         }
 
-        var platform = await _context.Platforms
+        var publisher = await _context.Publishers
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (platform == null)
+        if (publisher == null)
         {
             return NotFound();
         }
 
-        return View(platform);
+        return View(publisher);
     }
 
-    // GET: PLATFORMS/Create
+    // GET: PUBLISHERS/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: PLATFORMS/Create
+    // POST: PUBLISHERS/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,GamePlatforms,UserPreferredPlatforms")] Platform platform)
+    public async Task<IActionResult> Create([Bind("Id,Name,Description,Website,Games")] Publisher publisher)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(platform);
+            _context.Add(publisher);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(platform);
+        return View(publisher);
     }
 
-    // GET: PLATFORMS/Edit/5
+    // GET: PUBLISHERS/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -67,22 +67,22 @@ public class Platforms1Controller : Controller
             return NotFound();
         }
 
-        var platform = await _context.Platforms.FindAsync(id);
-        if (platform == null)
+        var publisher = await _context.Publishers.FindAsync(id);
+        if (publisher == null)
         {
             return NotFound();
         }
-        return View(platform);
+        return View(publisher);
     }
 
-    // POST: PLATFORMS/Edit/5
+    // POST: PUBLISHERS/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,GamePlatforms,UserPreferredPlatforms")] Platform platform)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Description,Website,Games")] Publisher publisher)
     {
-        if (id != platform.Id)
+        if (id != publisher.Id)
         {
             return NotFound();
         }
@@ -91,12 +91,12 @@ public class Platforms1Controller : Controller
         {
             try
             {
-                _context.Update(platform);
+                _context.Update(publisher);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlatformExists(platform.Id))
+                if (!PublisherExists(publisher.Id))
                 {
                     return NotFound();
                 }
@@ -107,10 +107,10 @@ public class Platforms1Controller : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(platform);
+        return View(publisher);
     }
 
-    // GET: PLATFORMS/Delete/5
+    // GET: PUBLISHERS/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -118,33 +118,33 @@ public class Platforms1Controller : Controller
             return NotFound();
         }
 
-        var platform = await _context.Platforms
+        var publisher = await _context.Publishers
             .FirstOrDefaultAsync(m => m.Id == id);
-        if (platform == null)
+        if (publisher == null)
         {
             return NotFound();
         }
 
-        return View(platform);
+        return View(publisher);
     }
 
-    // POST: PLATFORMS/Delete/5
+    // POST: PUBLISHERS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var platform = await _context.Platforms.FindAsync(id);
-        if (platform != null)
+        var publisher = await _context.Publishers.FindAsync(id);
+        if (publisher != null)
         {
-            _context.Platforms.Remove(platform);
+            _context.Publishers.Remove(publisher);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool PlatformExists(int? id)
+    private bool PublisherExists(int? id)
     {
-        return _context.Platforms.Any(e => e.Id == id);
+        return _context.Publishers.Any(e => e.Id == id);
     }
 }
