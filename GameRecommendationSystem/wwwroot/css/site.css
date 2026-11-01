@@ -1,31 +1,950 @@
-html {
-  font-size: 14px;
+
+:root {
+    --background: #0b0f19;
+    --surface: #121827;
+    --surface-light: #1a2235;
+    --primary: #8b5cf6;
+    --primary-hover: #7c3aed;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #263149;
 }
 
-@media (min-width: 768px) {
-  html {
+html {
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+a {
+    color: var(--primary);
+    text-decoration: none;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    a:hover {
+        color: var(--primary-hover);
+    }
+
+/* Navigation */
+
+.gaming-navbar {
+    background: rgba(11, 15, 25, 0.95);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+}
+
+.gaming-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text) !important;
+}
+
+.logo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font-weight: 800;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 10px 14px !important;
+    transition: color 0.2s ease;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: white;
+    }
+
+/* Buttons */
+
+.btn-gaming {
+    background: var(--primary);
+    color: white;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+    .btn-gaming:hover {
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+/* Main content */
+
+.main-content {
+    flex: 1;
+    padding: 40px 0;
+}
+
+/* Tables */
+
+.table {
+    color: var(--text);
+    border-color: var(--border);
+}
+
+    .table thead th {
+        background: var(--surface-light);
+        color: var(--text-muted);
+        border-color: var(--border);
+    }
+
+    .table tbody td {
+        background: var(--surface);
+        color: var(--text);
+        border-color: var(--border);
+        vertical-align: middle;
+    }
+
+    .table a {
+        color: var(--primary);
+    }
+
+/* Forms */
+
+.form-control,
+.form-select {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        background: var(--surface);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.2);
+    }
+
+.form-label {
+    color: var(--text-muted);
+}
+
+/* Cards */
+
+.card {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+/* Footer */
+
+.gaming-footer {
+    padding: 24px 0;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    text-align: center;
+}
+
+    .gaming-footer p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+/* Responsive */
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        padding-top: 15px;
+    }
+
+        .navbar-nav .nav-item {
+            margin-bottom: 5px;
+        }
+
+    .main-content {
+        padding: 25px 0;
+    }
+
+    /* =====================================
+   GAMEFINDER - MAIN LAYOUT
+===================================== */
+
+    :root {
+        --bg-main: #0d0e16;
+        --bg-sidebar: #11121c;
+        --bg-card: #191a29;
+        --bg-hover: #222238;
+        --accent: #8250f5;
+        --accent-light: #a78bfa;
+        --text-main: #f3f3f8;
+        --text-muted: #999bb5;
+        --border-color: #27283a;
+    }
+
+    html, body {
+        min-height: 100%;
+        margin: 0;
+    }
+
+    .gaming-body {
+        background: var(--bg-main);
+        color: var(--text-main);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .app-wrapper {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* =====================================
+   SIDEBAR
+===================================== */
+
+    .sidebar {
+        width: 270px;
+        min-width: 270px;
+        min-height: 100vh;
+        background: var(--bg-sidebar);
+        border-right: 1px solid var(--border-color);
+        padding: 28px 22px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-main);
+        text-decoration: none;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 55px;
+    }
+
+        .sidebar-logo:hover {
+            color: var(--accent-light);
+        }
+
+    .logo-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    /* Main three buttons */
+
+
+    /* Main three buttons */
+
+    .sidebar-button {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 16px 15px;
+        background-color: #ffffff;
+        border: 1px solid #ffffff;
+        border-radius: 14px;
+        color: #171725 !important;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: all 0.2s ease;
+    }
+
+        .sidebar-button:hover {
+            background-color: #e9ddff;
+            border-color: #a78bfa;
+            color: #5425b8 !important;
+            transform: translateX(3px);
+        }
+
+        /* Icons */
+
+        .sidebar-button .sidebar-icon {
+            width: 23px;
+            text-align: center;
+            font-size: 21px;
+            color: #8250f5;
+        }
+
+
+    /* Divider */
+
+    .sidebar-divider {
+        height: 1px;
+        background: var(--border-color);
+        margin: 28px 5px;
+    }
+
+    /* Navigation */
+
+    .sidebar-navigation {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 13px 15px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 14px;
+        transition: 0.2s ease;
+    }
+
+        .sidebar-link:hover {
+            background: var(--bg-hover);
+            color: white;
+        }
+
+    .sidebar-spacer {
+        flex-grow: 1;
+        min-height: 35px;
+    }
+
+    /* =====================================
+   STEAM CARD
+===================================== */
+
+    .steam-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 20px 15px;
+        text-align: center;
+    }
+
+    .steam-icon {
+        font-size: 35px;
+        margin-bottom: 10px;
+        color: var(--accent-light);
+    }
+
+    .steam-card h6 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .steam-card p {
+        color: var(--text-muted);
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .steam-button {
+        width: 100%;
+        padding: 10px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        opacity: 0.7;
+    }
+
+    /* =====================================
+   MAIN AREA
+===================================== */
+
+    .main-area {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topbar {
+        height: 85px;
+        min-height: 85px;
+        padding: 0 35px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--bg-main);
+    }
+
+    /* Search */
+
+    .search-form {
+        width: 65%;
+        max-width: 750px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 15px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+    }
+
+    .search-icon {
+        color: var(--text-muted);
+        font-size: 25px;
+    }
+
+    .search-form input {
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: white;
+    }
+
+        .search-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+    .search-form button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+    /* Page content */
+
+    .main-content {
+        flex: 1;
+        padding: 35px;
+    }
+
+    /* Footer */
+
+    .gaming-footer {
+        padding: 15px 35px;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+        font-size: 12px;
+    }
+
+        .gaming-footer p {
+            margin: 0;
+        }
+
+    /* =====================================
+   RESPONSIVE
+===================================== */
+
+    @media (max-width: 768px) {
+
+        .sidebar {
+            width: 210px;
+            min-width: 210px;
+            padding: 20px 12px;
+        }
+
+        .sidebar-logo {
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        .sidebar-button,
+        .sidebar-link {
+            font-size: 12px;
+            padding: 12px 9px;
+            gap: 9px;
+        }
+
+        .topbar {
+            padding: 0 15px;
+        }
+
+        .search-form {
+            width: 100%;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .sidebar {
+            width: 75px;
+            min-width: 75px;
+            padding: 20px 8px;
+        }
+
+        .sidebar-logo {
+            justify-content: center;
+            margin-bottom: 35px;
+        }
+
+            .sidebar-logo > span:last-child,
+            .sidebar-button > span:last-child,
+            .sidebar-link > span:last-child,
+            .steam-card {
+                display: none;
+            }
+
+        .sidebar-button,
+        .sidebar-link {
+            justify-content: center;
+            padding: 14px 5px;
+        }
+    }
+
+
+    /* ==========================================
+   GAMEFINDER - NEW SIDEBAR DESIGN
+========================================== */
+
+    .gf-body,
+    .gf-body * {
+        box-sizing: border-box;
+    }
+
+    .gf-body {
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 100vh;
+        background: #0d0e16 !important;
+        color: #f4f4f8;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .gf-app {
+        display: flex;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .gf-sidebar {
+        width: 270px;
+        min-width: 270px;
+        min-height: 100vh;
+        padding: 30px 20px 18px;
+        background: #141520;
+        border-right: 1px solid #292a3b;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+    }
+
+    /* LOGO */
+
+    .gf-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 48px;
+        padding: 0 5px;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-size: 22px;
+        font-weight: 750;
+    }
+
+        .gf-logo:hover {
+            color: #c4aaff !important;
+        }
+
+    .gf-logo-icon {
+        width: 43px;
+        height: 43px;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #8050ed;
+        color: #ffffff;
+        border-radius: 12px;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    /* SECTION LABELS */
+
+    .gf-section-label {
+        margin: 0 0 15px 7px;
+        color: #85869e;
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: 1.5px;
+    }
+
+    /* THREE MAIN BUTTONS */
+
+    .gf-main-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .gf-main-button {
+        width: 100%;
+        min-height: 58px;
+        padding: 12px 13px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #ffffff !important;
+        color: #20202e !important;
+        border: 1px solid #ffffff;
+        border-radius: 12px;
+        text-decoration: none !important;
+        font-size: 13px;
+        font-weight: 700;
+        transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    }
+
+        .gf-main-button:hover {
+            background: #eee6ff !important;
+            border-color: #a98aff;
+            color: #572eb5 !important;
+            transform: translateX(3px);
+        }
+
+    .gf-button-icon {
+        width: 25px;
+        min-width: 25px;
+        text-align: center;
+        color: #8050ed;
+        font-size: 22px;
+    }
+
+    .gf-arrow {
+        margin-left: auto;
+        color: #9290a5;
+        font-size: 22px;
+        line-height: 1;
+    }
+
+    /* DIVIDER */
+
+    .gf-divider {
+        width: 100%;
+        height: 1px;
+        background: #303143;
+        margin: 29px 0 25px;
+    }
+
+    /* SECONDARY NAVIGATION */
+
+    .gf-navigation {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .gf-nav-link {
+        min-height: 44px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 13px;
+        color: #b5b6c9 !important;
+        background: transparent;
+        border-radius: 10px;
+        text-decoration: none !important;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+        .gf-nav-link:hover {
+            background: #252538;
+            color: #ffffff !important;
+        }
+
+    .gf-nav-icon {
+        width: 24px;
+        text-align: center;
+        color: #a78bfa;
+        font-size: 20px;
+    }
+
+    /* BOTTOM STEAM CARD */
+
+    .gf-sidebar-bottom {
+        margin-top: auto;
+        padding-top: 30px;
+    }
+
+    .gf-steam-card {
+        width: 100%;
+        padding: 20px 15px;
+        background: #1c1d2d;
+        border: 1px solid #34354a;
+        border-radius: 14px;
+        text-align: center;
+    }
+
+    .gf-steam-icon {
+        color: #a78bfa;
+        font-size: 34px;
+        margin-bottom: 9px;
+    }
+
+    .gf-steam-card h3 {
+        margin: 0 0 9px;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .gf-steam-card p {
+        margin: 0 0 15px;
+        color: #a5a6b9;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .gf-steam-card button {
+        width: 100%;
+        padding: 10px;
+        border: 0;
+        border-radius: 9px;
+        background: #8050ed;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        opacity: 0.8;
+    }
+
+    .gf-sidebar-footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #73758b;
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    /* MAIN AREA */
+
+    .gf-main {
+        min-width: 0;
+        min-height: 100vh;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #0d0e16;
+    }
+
+    /* TOP BAR */
+
+    .gf-topbar {
+        min-height: 82px;
+        padding: 15px 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        background: #11121c;
+        border-bottom: 1px solid #292a3b;
+    }
+
+    /* SEARCH */
+
+    .gf-search {
+        width: 100%;
+        max-width: 680px;
+        min-height: 47px;
+        padding: 5px 8px 5px 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #1c1d2b;
+        border: 1px solid #333449;
+        border-radius: 11px;
+    }
+
+        .gf-search:focus-within {
+            border-color: #8050ed;
+        }
+
+    .gf-search-icon {
+        color: #a78bfa;
+        font-size: 25px;
+    }
+
+    .gf-search input {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        padding: 8px 0;
+        border: 0;
+        outline: none;
+        background: transparent;
+        color: #ffffff;
+        font-size: 14px;
+    }
+
+        .gf-search input::placeholder {
+            color: #85869e;
+        }
+
+    .gf-search button {
+        padding: 9px 17px;
+        border: 0;
+        border-radius: 8px;
+        background: #8050ed;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+        .gf-search button:hover {
+            background: #966cf5;
+        }
+
+    /* ACCOUNT */
+
+    .gf-account {
+        flex-shrink: 0;
+        color: #ffffff;
+    }
+
+        .gf-account a {
+            color: #c5b0ff;
+            text-decoration: none;
+        }
+
+            .gf-account a:hover {
+                color: #ffffff;
+            }
+
+    /* PAGE CONTENT */
+
+    .gf-content {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        padding: 35px;
+    }
+
+    /* FOOTER */
+
+    .gf-footer {
+        padding: 17px 35px;
+        border-top: 1px solid #292a3b;
+        color: #85869e;
+        font-size: 12px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+
+        .gf-sidebar {
+            width: 230px;
+            min-width: 230px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+
+        .gf-topbar {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .gf-content {
+            padding: 25px 20px;
+        }
+    }
+
+    @media (max-width: 600px) {
+
+        .gf-app {
+            flex-direction: column;
+        }
+
+        .gf-sidebar {
+            width: 100%;
+            min-width: 0;
+            min-height: auto;
+            padding: 18px;
+        }
+
+        .gf-logo {
+            margin-bottom: 22px;
+        }
+
+        .gf-main-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .gf-main-button {
+            min-height: 48px;
+        }
+
+        .gf-divider {
+            margin: 20px 0;
+        }
+
+        .gf-sidebar-bottom {
+            padding-top: 20px;
+        }
+
+        .gf-steam-card {
+            max-width: none;
+        }
+
+        .gf-topbar {
+            flex-wrap: wrap;
+            padding: 15px;
+        }
+
+        .gf-search {
+            max-width: none;
+        }
+
+        .gf-account {
+            width: 100%;
+        }
+
+        .gf-content {
+            padding: 20px 15px;
+        }
+
+        .gf-footer {
+            padding: 15px;
+        }
+    }
+
 }
