@@ -1,39 +1,79 @@
+
 using GameRecommendationSystem.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration
-    .GetConnectionString("DefaultConnection")
+// ==========================================
+// DATABASE CONNECTION
+// ==========================================
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException(
         "Connection string 'DefaultConnection' was not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-    options.SignIn.RequireConfirmedAccount = false)
+
+// ==========================================
+// IDENTITY
+// ==========================================
+
+builder.Services
+    .AddDefaultIdentity<IdentityUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = false;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+// ==========================================
+// MVC AND RAZOR PAGES
+// ==========================================
+
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddRazorPages();
+
+
+// ==========================================
+// BUILD APPLICATION
+// ==========================================
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+
+// ==========================================
+// HTTP PIPELINE
+// ==========================================
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
+// IMPORTANT: Enables CSS, JavaScript and images from wwwroot
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
+
+
+// ==========================================
+// ROUTES
+// ==========================================
 
 app.MapControllerRoute(
     name: "default",
@@ -41,5 +81,9 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-app.Run();
 
+// ==========================================
+// START APPLICATION
+// ==========================================
+
+app.Run();

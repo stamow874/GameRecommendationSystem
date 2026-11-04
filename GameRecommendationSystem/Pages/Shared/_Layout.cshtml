@@ -8,23 +8,23 @@
     <title>@ViewData["Title"] - GameFinder</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/GameRecommendationSystem.styles.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GameRecommendationSystem.styles.css" asp-append-version="true" />
 </head>
 
 <body class="gf-body">
 
     <div class="gf-app">
 
-        <!-- SIDEBAR -->
+        <!-- LEFT SIDEBAR -->
         <aside class="gf-sidebar">
 
             <a class="gf-logo" asp-controller="Home" asp-action="Index">
                 <span class="gf-logo-icon">G</span>
-                <span>GameFinder</span>
+                <span>Хрумка</span>
             </a>
 
-            <div class="gf-section-label">МОЯТА БИБЛИОТЕКА</div>
+            <div class="gf-section-title">МОЯТА БИБЛИОТЕКА</div>
 
             <nav class="gf-main-buttons">
 
@@ -56,31 +56,41 @@
 
             <div class="gf-divider"></div>
 
-            <div class="gf-section-label">НАВИГАЦИЯ</div>
+            <div class="gf-section-title">НАВИГАЦИЯ</div>
 
             <nav class="gf-navigation">
 
-                <a class="gf-nav-link" asp-controller="Home" asp-action="Index">
+                <a class="gf-nav-link"
+                   asp-controller="Home"
+                   asp-action="Index">
                     <span class="gf-nav-icon">⌂</span>
                     <span>Начало</span>
                 </a>
 
-                <a class="gf-nav-link" asp-controller="Games" asp-action="Index">
+                <a class="gf-nav-link"
+                   asp-controller="Games"
+                   asp-action="Index">
                     <span class="gf-nav-icon">✧</span>
                     <span>Игри</span>
                 </a>
 
-                <a class="gf-nav-link" asp-controller="Genres" asp-action="Index">
+                <a class="gf-nav-link"
+                   asp-controller="Genres"
+                   asp-action="Index">
                     <span class="gf-nav-icon">◈</span>
                     <span>Жанрове</span>
                 </a>
 
-                <a class="gf-nav-link" asp-controller="Platforms" asp-action="Index">
+                <a class="gf-nav-link"
+                   asp-controller="Platforms"
+                   asp-action="Index">
                     <span class="gf-nav-icon">▣</span>
                     <span>Платформи</span>
                 </a>
 
-                <a class="gf-nav-link" asp-controller="Publishers" asp-action="Index">
+                <a class="gf-nav-link"
+                   asp-controller="Publishers"
+                   asp-action="Index">
                     <span class="gf-nav-icon">◆</span>
                     <span>Издатели</span>
                 </a>
@@ -113,9 +123,10 @@
         </aside>
 
 
-        <!-- MAIN CONTENT -->
+        <!-- RIGHT MAIN AREA -->
         <div class="gf-main">
 
+            <!-- TOP BAR -->
             <header class="gf-topbar">
 
                 <form class="gf-search"
@@ -130,7 +141,9 @@
                            placeholder="Търси игри, жанрове..."
                            aria-label="Търси игри" />
 
-                    <button type="submit">Търси</button>
+                    <button type="submit">
+                        Търси
+                    </button>
 
                 </form>
 
@@ -140,10 +153,14 @@
 
             </header>
 
+
+            <!-- PAGE CONTENT -->
             <main class="gf-content">
                 @RenderBody()
             </main>
 
+
+            <!-- FOOTER -->
             <footer class="gf-footer">
                 Персонализирани препоръки за видеоигри.
             </footer>
@@ -151,6 +168,7 @@
         </div>
 
     </div>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
