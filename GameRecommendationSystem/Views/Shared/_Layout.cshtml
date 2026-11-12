@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>@ViewData["Title"] - GameFinder</title>
+    <title>@ViewData["Title"] - Хрумка</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/GameRecommendationSystem.styles.css" />
@@ -16,11 +16,11 @@
 
     <div class="gf-app">
 
-        <!-- LEFT SIDEBAR -->
+       
         <aside class="gf-sidebar">
 
             <a class="gf-logo" asp-controller="Home" asp-action="Index">
-                <span class="gf-logo-icon">G</span>
+                <span class="gf-logo-icon">Х</span>
                 <span>Хрумка</span>
             </a>
 
@@ -115,18 +115,17 @@
                 </div>
 
                 <div class="gf-sidebar-footer">
-                    GAMEFINDER © @DateTime.Now.Year
+                    ХРУМКА © @DateTime.Now.Year
                 </div>
 
             </div>
 
         </aside>
 
-
-        <!-- RIGHT MAIN AREA -->
+        
         <div class="gf-main">
 
-            <!-- TOP BAR -->
+           
             <header class="gf-topbar">
 
                 <form class="gf-search"
@@ -153,14 +152,12 @@
 
             </header>
 
-
-            <!-- PAGE CONTENT -->
+            
             <main class="gf-content">
                 @RenderBody()
             </main>
 
-
-            <!-- FOOTER -->
+          
             <footer class="gf-footer">
                 Персонализирани препоръки за видеоигри.
             </footer>
@@ -168,7 +165,6 @@
         </div>
 
     </div>
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

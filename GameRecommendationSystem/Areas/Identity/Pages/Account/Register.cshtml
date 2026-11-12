@@ -1,0 +1,85 @@
+@page
+@model GameRecommendationSystem.Areas.Identity.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Регистрация";
+    Layout = "/Areas/Identity/Pages/Shared/_AuthLayout.cshtml";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="auth-logo-icon">Х</div>
+            <h1>Хрумка</h1>
+        </div>
+
+        <div class="auth-heading">
+            <h2>Създай профил</h2>
+            <p>Регистрирай се и открий нови игри.</p>
+        </div>
+
+        <form id="registerForm"
+              asp-route-returnUrl="@Model.ReturnUrl"
+              method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="auth-validation"
+                 role="alert"></div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.UserName">Потребителско име</label>
+                <input asp-for="Input.UserName"
+                       class="auth-input"
+                       autocomplete="username"
+                       placeholder="Избери потребителско име" />
+                <span asp-validation-for="Input.UserName"
+                      class="auth-field-error"></span>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.Email">Имейл адрес</label>
+                <input asp-for="Input.Email"
+                       class="auth-input"
+                       autocomplete="email"
+                       placeholder="Въведи имейл адрес" />
+                <span asp-validation-for="Input.Email"
+                      class="auth-field-error"></span>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.Password">Парола</label>
+                <input asp-for="Input.Password"
+                       class="auth-input"
+                       autocomplete="new-password"
+                       placeholder="Създай парола" />
+                <span asp-validation-for="Input.Password"
+                      class="auth-field-error"></span>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.ConfirmPassword">Потвърди паролата</label>
+                <input asp-for="Input.ConfirmPassword"
+                       class="auth-input"
+                       autocomplete="new-password"
+                       placeholder="Повтори паролата" />
+                <span asp-validation-for="Input.ConfirmPassword"
+                      class="auth-field-error"></span>
+            </div>
+
+            <button id="registerSubmit"
+                    type="submit"
+                    class="auth-submit">
+                Регистрация
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <span>Вече имаш профил?</span>
+            <a asp-page="./Login">Влез тук</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,70 @@
+﻿@model GameRecommendationSystem.ViewModels.ProfileEditViewModel
+
+@{
+    ViewData["Title"] = "Редактиране на профила";
+}
+
+<div class="profile-page">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            @(Model.UserName?.Substring(0, 1).ToUpper() ?? "U")
+        </div>
+
+        <div>
+            <h1>Редактиране на профила</h1>
+            <p>Промени информацията за своя акаунт.</p>
+        </div>
+    </div>
+
+    <div class="profile-card">
+        <h2>Данни за акаунта</h2>
+
+        <form asp-controller="Profile"
+              asp-action="Edit"
+              method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"
+                 role="alert"></div>
+
+            <div class="profile-info-group">
+                <label asp-for="UserName"></label>
+
+                <input asp-for="UserName"
+                       class="form-control"
+                       autocomplete="username" />
+
+                <span asp-validation-for="UserName"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="profile-info-group">
+                <label asp-for="Email"></label>
+
+                <input asp-for="Email"
+                       class="form-control"
+                       autocomplete="email" />
+
+                <span asp-validation-for="Email"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="profile-actions">
+                <button type="submit"
+                        class="profile-edit-button">
+                    Запази промените
+                </button>
+
+                <a asp-controller="Profile"
+                   asp-action="Index"
+                   class="profile-cancel-button">
+                    Отказ
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

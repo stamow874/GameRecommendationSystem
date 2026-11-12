@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Изтриване на акаунт";
+}
+
+<div class="profile-page">
+
+    <div class="profile-header">
+        <div class="profile-avatar profile-delete-avatar">
+            !
+        </div>
+
+        <div>
+            <h1>Изтриване на акаунт</h1>
+            <p>Потвърди дали наистина искаш да изтриеш профила си.</p>
+        </div>
+    </div>
+
+    <div class="profile-card profile-danger-card">
+
+        <h2>Сигурен ли си, че искаш да продължиш?</h2>
+
+        <p>
+            Това действие е необратимо. След изтриването:
+        </p>
+
+        <ul class="profile-delete-list">
+            <li>Твоят потребителски акаунт ще бъде изтрит.</li>
+            <li>Твоите любими игри ще бъдат премахнати.</li>
+            <li>Твоите ревюта и оценки ще бъдат изтрити.</li>
+            <li>Историята на препоръките ти ще бъде изтрита.</li>
+            <li>Твоите потребителски предпочитания ще бъдат премахнати.</li>
+        </ul>
+
+        <div class="profile-delete-warning">
+            След потвърждение няма да можеш да възстановиш акаунта си.
+        </div>
+
+        <div class="profile-actions">
+
+            <form asp-controller="Profile"
+                  asp-action="DeleteConfirmed"
+                  method="post">
+
+                <button type="submit"
+                        class="profile-delete-button">
+                    Да, изтрий акаунта ми
+                </button>
+
+            </form>
+
+            <a asp-controller="Profile"
+               asp-action="Index"
+               class="profile-cancel-button">
+                Отказ
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+

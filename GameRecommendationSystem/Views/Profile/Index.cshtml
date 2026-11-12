@@ -1,0 +1,85 @@
+﻿@using GameRecommendationSystem.Data
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Моят профил";
+}
+
+<div class="profile-page">
+
+    <div class="profile-header">
+        <div class="profile-avatar">
+            @(Model.UserName?.Substring(0, 1).ToUpper() ?? "U")
+        </div>
+
+        <div>
+            <h1>Моят профил</h1>
+            <p>Управлявай информацията за своя акаунт в Хрумка.</p>
+        </div>
+    </div>
+
+    @if (TempData["ProfileMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["ProfileMessage"]
+        </div>
+    }
+
+    @if (TempData["ProfileError"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ProfileError"]
+        </div>
+    }
+
+    <div class="profile-card">
+
+        <h2>Информация за акаунта</h2>
+
+        <div class="profile-info-group">
+            <label>Потребителско име</label>
+
+            <div class="profile-info-value">
+                @Model.UserName
+            </div>
+        </div>
+
+        <div class="profile-info-group">
+            <label>Имейл адрес</label>
+
+            <div class="profile-info-value">
+                @Model.Email
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a asp-controller="Profile"
+               asp-action="Edit"
+               class="profile-edit-button">
+                Редактирай профила
+            </a>
+        </div>
+
+    </div>
+
+    <div class="profile-card profile-danger-card">
+
+        <h2>Изтриване на акаунт</h2>
+
+        <p>
+            Изтриването на акаунта е необратимо действие.
+            Ще загубиш профила си, любимите игри, ревютата
+            и историята на препоръките.
+        </p>
+
+        <div class="profile-actions">
+            <a asp-controller="Profile"
+               asp-action="Delete"
+               class="profile-delete-button">
+                Изтрий акаунта
+            </a>
+        </div>
+
+    </div>
+
+</div>

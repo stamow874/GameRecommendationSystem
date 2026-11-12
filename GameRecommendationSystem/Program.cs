@@ -1,53 +1,52 @@
 
 using GameRecommendationSystem.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ==========================================
-// DATABASE CONNECTION
-// ==========================================
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+var connectionString = builder.Configuration
+    .GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException(
         "Connection string 'DefaultConnection' was not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-
-// ==========================================
-// IDENTITY
-// ==========================================
-
 builder.Services
-    .AddDefaultIdentity<IdentityUser>(options =>
+    .AddDefaultIdentity<ApplicationUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedEmail = false;
+
+        options.User.RequireUniqueEmail = true;
+
+        options.Password.RequiredLength = 8;
+        options.Password.RequireDigit = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireNonAlphanumeric = false;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 
-// ==========================================
-// MVC AND RAZOR PAGES
-// ==========================================
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
 
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddRazorPages();
 
-
-// ==========================================
-// BUILD APPLICATION
-// ==========================================
-
 var app = builder.Build();
-
-
-// ==========================================
-// HTTP PIPELINE
-// ==========================================
 
 if (app.Environment.IsDevelopment())
 {
@@ -60,30 +59,17 @@ else
 }
 
 app.UseHttpsRedirection();
-
-// IMPORTANT: Enables CSS, JavaScript and images from wwwroot
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
-
-
-// ==========================================
-// ROUTES
-// ==========================================
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
-
-
-// ==========================================
-// START APPLICATION
-// ==========================================
 
 app.Run();

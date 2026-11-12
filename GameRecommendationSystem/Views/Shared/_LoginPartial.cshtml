@@ -1,0 +1,46 @@
+﻿@using GameRecommendationSystem.Data
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="gf-account-user">
+        <a asp-controller="Profile"
+           asp-action="Index"
+           class="gf-account-profile">
+            <span class="gf-account-avatar">
+                @(User.Identity?.Name?.Substring(0, 1).ToUpper() ?? "U")
+            </span>
+
+            <span class="gf-account-username">
+                @User.Identity?.Name
+            </span>
+        </a>
+
+        <form asp-area="Identity"
+              asp-page="/Account/Logout"
+              asp-route-returnUrl="/"
+              method="post">
+            <button type="submit" class="gf-logout-button">
+                Изход
+            </button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="gf-account-user">
+        <a asp-area="Identity"
+           asp-page="/Account/Login"
+           class="gf-login-link">
+            Вход
+        </a>
+
+        <a asp-area="Identity"
+           asp-page="/Account/Register"
+           class="gf-register-link">
+            Регистрация
+        </a>
+    </div>
+}
+

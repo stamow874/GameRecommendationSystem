@@ -1,0 +1,69 @@
+@page
+@model GameRecommendationSystem.Areas.Identity.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Вход";
+    Layout = "/Areas/Identity/Pages/Shared/_AuthLayout.cshtml";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            <div class="auth-logo-icon">Х</div>
+            <h1>Хрумка</h1>
+        </div>
+
+        <div class="auth-heading">
+            <h2>Добре дошъл отново!</h2>
+            <p>Влез в профила си, за да откриеш следващата си любима игра.</p>
+        </div>
+
+        <form id="account" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="auth-validation"
+                 role="alert"></div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.Email">Имейл адрес</label>
+                <input asp-for="Input.Email"
+                       class="auth-input"
+                       autocomplete="username"
+                       placeholder="Въведи имейл адрес" />
+                <span asp-validation-for="Input.Email"
+                      class="auth-field-error"></span>
+            </div>
+
+            <div class="auth-form-group">
+                <label asp-for="Input.Password">Парола</label>
+                <input asp-for="Input.Password"
+                       class="auth-input"
+                       autocomplete="current-password"
+                       placeholder="Въведи парола" />
+                <span asp-validation-for="Input.Password"
+                      class="auth-field-error"></span>
+            </div>
+
+            <div class="auth-remember">
+                <input asp-for="Input.RememberMe" />
+                <label asp-for="Input.RememberMe">Запомни ме</label>
+            </div>
+
+            <button type="submit" class="auth-submit">
+                Вход
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            <span>Все още нямаш профил?</span>
+            <a asp-page="./Register">Регистрирай се</a>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

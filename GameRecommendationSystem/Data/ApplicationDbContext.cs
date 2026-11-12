@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GameRecommendationSystem.Data;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options)
@@ -31,7 +31,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(builder);
 
-        // Една игра може да има много жанрове.
         builder.Entity<GameGenre>()
             .HasKey(x => new { x.GameId, x.GenreId });
 
@@ -47,7 +46,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(x => x.GenreId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Една игра може да е налична на много платформи.
         builder.Entity<GamePlatform>()
             .HasKey(x => new { x.GameId, x.PlatformId });
 
@@ -63,18 +61,16 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(x => x.PlatformId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Един потребител има един профил с предпочитания.
         builder.Entity<UserPreference>()
             .HasIndex(x => x.UserId)
             .IsUnique();
 
         builder.Entity<UserPreference>()
-            .HasOne<IdentityUser>()
+            .HasOne<ApplicationUser>()
             .WithOne()
             .HasForeignKey<UserPreference>(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Предпочитани жанрове.
         builder.Entity<UserPreferredGenre>()
             .HasKey(x => new { x.UserPreferenceId, x.GenreId });
 
@@ -90,7 +86,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(x => x.GenreId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Предпочитани платформи.
         builder.Entity<UserPreferredPlatform>()
             .HasKey(x => new { x.UserPreferenceId, x.PlatformId });
 
@@ -106,13 +101,12 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(x => x.PlatformId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Потребителска оценка за игра.
         builder.Entity<GameReview>()
             .HasIndex(x => new { x.UserId, x.GameId })
             .IsUnique();
 
         builder.Entity<GameReview>()
-            .HasOne<IdentityUser>()
+            .HasOne<ApplicationUser>()
             .WithMany()
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);
@@ -123,13 +117,12 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(x => x.GameId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Любими игри — една игра не може да се добави два пъти.
         builder.Entity<FavoriteGame>()
             .HasIndex(x => new { x.UserId, x.GameId })
             .IsUnique();
 
         builder.Entity<FavoriteGame>()
-            .HasOne<IdentityUser>()
+            .HasOne<ApplicationUser>()
             .WithMany()
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);
@@ -140,9 +133,8 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(x => x.GameId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // История на препоръките.
         builder.Entity<RecommendationHistory>()
-            .HasOne<IdentityUser>()
+            .HasOne<ApplicationUser>()
             .WithMany()
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);
@@ -157,7 +149,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .Property(x => x.MatchPercentage)
             .HasPrecision(5, 2);
 
-        // Не допускаме дублирани имена на жанрове и платформи.
         builder.Entity<Genre>()
             .HasIndex(x => x.Name)
             .IsUnique();
@@ -166,7 +157,6 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasIndex(x => x.Name)
             .IsUnique();
 
-        // Един издател може да има много игри.
         builder.Entity<Game>()
             .HasOne(x => x.Publisher)
             .WithMany(x => x.Games)
