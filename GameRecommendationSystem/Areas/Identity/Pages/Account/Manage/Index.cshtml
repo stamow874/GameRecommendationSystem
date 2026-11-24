@@ -1,26 +1,71 @@
 @page
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Моят профил";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
+<div class="gf-profile-page">
+
+    <div class="gf-profile-header">
+        <div class="gf-profile-avatar">
+            @(string.IsNullOrEmpty(Model.Username) ? "Х" : Model.Username.Substring(0, 1).ToUpper())
+        </div>
+        <div class="gf-profile-heading">
+            <h1>Настройки на профила</h1>
+            <p>Управлявай информацията за своя акаунт.</p>
+        </div>
+    </div>
+
+    <partial name="_StatusMessage" for="StatusMessage" />
+
+    <div class="gf-profile-card">
+
+        <div class="gf-profile-card-heading">
+            <div>
+                <h2>Лична информация</h2>
+                <p>Преглед и редактиране на данните ти.</p>
+            </div>
+        </div>
+
         <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="gf-profile-section">
+                <div class="gf-profile-section-title">
+                    <span>01</span>
+                    Данни за акаунта
+                </div>
+
+                <div class="gf-profile-field">
+                    <label asp-for="Username">Потребителско име</label>
+                    <input asp-for="Username" class="form-control" disabled />
+                    <small>Това е името, с което влизаш в Хрумка. Не може да бъде променяно от тази страница.</small>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+
+            <div class="gf-profile-section">
+                <div class="gf-profile-section-title">
+                    <span>02</span>
+                    Данни за контакт
+                </div>
+
+                <div class="gf-profile-field">
+                    <label asp-for="Input.PhoneNumber">Телефонен номер</label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Въведи телефонен номер" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    <small>Можеш да редактираш този номер по всяко време.</small>
+                </div>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+
+            <div class="gf-profile-actions">
+                <button id="update-profile-button" type="submit" class="gf-profile-save">
+                    Запази промените
+                </button>
+            </div>
+
         </form>
     </div>
 </div>

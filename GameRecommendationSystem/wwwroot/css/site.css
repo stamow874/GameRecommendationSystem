@@ -653,4 +653,299 @@ body {
         display: inline-block;
     }
 
+    .gf-profile-page {
+        width: 100%;
+        max-width: 1000px;
+        margin: 15px auto;
+        color: #f4f4f8;
+    }
+
+    .gf-profile-header {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        margin-bottom: 35px;
+    }
+
+    .gf-profile-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 85px;
+        height: 85px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #966cf5, #572eb5);
+        color: #ffffff;
+        font-size: 36px;
+        font-weight: 800;
+    }
+
+    .gf-profile-heading h1 {
+        margin: 0 0 8px;
+        color: #ffffff;
+        font-size: 30px;
+        font-weight: 750;
+    }
+
+    .gf-profile-heading p {
+        margin: 0;
+        color: #a5a6b9;
+        font-size: 14px;
+    }
+
+    .gf-profile-card {
+        width: 100%;
+        max-width: 750px;
+        padding: 30px;
+        background: #141520;
+        border: 1px solid #292a3b;
+        border-radius: 16px;
+    }
+
+    .gf-profile-card-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid #303143;
+    }
+
+        .gf-profile-card-heading h2 {
+            margin: 0 0 8px;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .gf-profile-card-heading p {
+            margin: 0;
+            color: #85869e;
+            font-size: 13px;
+        }
+
+    .gf-profile-card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 43px;
+        height: 43px;
+        border-radius: 12px;
+        background: rgba(128, 80, 237, 0.15);
+        color: #a78bfa;
+        font-size: 23px;
+    }
+
+    .gf-profile-field {
+        margin-bottom: 25px;
+    }
+
+        .gf-profile-field label {
+            display: block;
+            margin-bottom: 9px;
+            color: #d8d8e5;
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .gf-profile-field .form-control {
+            width: 100%;
+            min-height: 49px;
+            padding: 12px 15px;
+            border: 1px solid #333449;
+            border-radius: 10px;
+            background: #1c1d2b;
+            color: #ffffff;
+            font-size: 14px;
+            box-shadow: none;
+        }
+
+            .gf-profile-field .form-control:focus {
+                border-color: #8050ed;
+                background: #1c1d2b;
+                color: #ffffff;
+                box-shadow: 0 0 0 3px rgba(128, 80, 237, 0.15);
+            }
+
+            .gf-profile-field .form-control:disabled {
+                background: #171824;
+                border-color: #292a3b;
+                color: #85869e;
+                opacity: 1;
+            }
+
+            .gf-profile-field .form-control::placeholder {
+                color: #77788e;
+            }
+
+    .gf-profile-hint {
+        display: block;
+        margin-top: 8px;
+        color: #85869e;
+        font-size: 12px;
+    }
+
+    .gf-profile-actions {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 32px;
+        padding-top: 23px;
+        border-top: 1px solid #303143;
+    }
+
+    .gf-profile-save {
+        min-height: 46px;
+        padding: 11px 24px;
+        border: 0;
+        border-radius: 10px;
+        background: #8050ed;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+        .gf-profile-save:hover {
+            background: #966cf5;
+            transform: translateY(-2px);
+        }
+
+    .gf-profile-validation {
+        margin-bottom: 18px;
+    }
+
+    .gf-profile-page .alert {
+        max-width: 750px;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+        .gf-profile-page {
+            margin: 5px auto;
+        }
+
+        .gf-profile-header {
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .gf-profile-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 17px;
+            font-size: 28px;
+        }
+
+        .gf-profile-heading h1 {
+            font-size: 23px;
+        }
+
+        .gf-profile-heading p {
+            font-size: 12px;
+        }
+
+        .gf-profile-card {
+            padding: 20px;
+        }
+
+        .gf-profile-card-heading h2 {
+            font-size: 18px;
+        }
+
+        .gf-profile-save {
+            width: 100%;
+        }
+    }
+
+
+    .gf-profile-section {
+        margin-bottom: 30px;
+    }
+
+    .gf-profile-section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+        .gf-profile-section-title span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(128, 80, 237, 0.18);
+            color: #a78bfa;
+            font-size: 12px;
+        }
+
+    .gf-profile-field {
+        max-width: 100%;
+        padding: 20px;
+        background: #1c1d2b;
+        border: 1px solid #333449;
+        border-radius: 12px;
+    }
+
+        .gf-profile-field label {
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .gf-profile-field small {
+            display: block;
+            margin-top: 10px;
+            color: #85869e;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .gf-profile-field .form-control {
+            min-height: 48px;
+            background: #11121c;
+            border: 1px solid #3b3c50;
+            color: #ffffff;
+            border-radius: 9px;
+        }
+
+            .gf-profile-field .form-control:disabled {
+                background: #171824;
+                color: #85869e;
+                border-color: #292a3b;
+                opacity: 1;
+                cursor: not-allowed;
+            }
+
+            .gf-profile-field .form-control:focus {
+                border-color: #8050ed;
+                box-shadow: 0 0 0 3px rgba(128, 80, 237, 0.15);
+            }
+
+    .gf-profile-actions {
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 600px) {
+        .gf-profile-field {
+            padding: 15px;
+        }
+
+        .gf-profile-actions {
+            justify-content: stretch;
+        }
+
+        .gf-profile-save {
+            width: 100%;
+        }
+    }
+
 }
