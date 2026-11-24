@@ -1,0 +1,516 @@
+﻿
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Хрумка</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background: #0d0e16;
+        }
+
+        body.gf-profile-standalone-body {
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #0d0e16 !important;
+            color: #f4f3fa !important;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .gf-profile-standalone {
+            min-height: 100vh;
+            padding: 55px 24px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(128, 80, 237, 0.13), transparent 55%), #0d0e16;
+        }
+
+        .gf-profile-shell {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .gf-profile-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 42px;
+            color: #aaa5bb;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+            .gf-profile-back:hover {
+                color: #b99cff;
+            }
+
+        .gf-profile-heading {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin: 0 auto 38px;
+            max-width: 850px;
+        }
+
+        .gf-profile-avatar {
+            width: 76px;
+            height: 76px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #9365f4, #5730b7);
+            color: white;
+            font-size: 30px;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(128, 80, 237, 0.2);
+        }
+
+        .gf-profile-eyebrow,
+        .gf-profile-section-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #a88bfa;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .gf-profile-heading h1 {
+            margin: 0 0 7px;
+            color: #ffffff;
+            font-size: 29px;
+            font-weight: 750;
+        }
+
+        .gf-profile-heading p {
+            margin: 0;
+            color: #a1a0b2;
+            font-size: 14px;
+        }
+
+        .gf-profile-content {
+            display: block;
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .gf-profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .gf-profile-card {
+            padding: 30px;
+            border: 1px solid #303144;
+            border-radius: 16px;
+            background: #191a28;
+        }
+
+        .gf-profile-card-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding-bottom: 23px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #303144;
+        }
+
+            .gf-profile-card-heading h2 {
+                margin: 0 0 7px;
+                color: #ffffff;
+                font-size: 19px;
+                font-weight: 700;
+            }
+
+            .gf-profile-card-heading p {
+                margin: 0;
+                color: #a1a0b2;
+                font-size: 13px;
+            }
+
+        .gf-profile-card-icon {
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: #29223e;
+            font-size: 20px;
+        }
+
+        .gf-profile-field {
+            width: 100%;
+            max-width: 650px;
+        }
+
+            .gf-profile-field label {
+                display: block;
+                margin-bottom: 10px;
+                color: #f0eef8;
+                font-size: 13px;
+                font-weight: 650;
+            }
+
+        .gf-profile-field-spaced {
+            margin-top: 25px;
+        }
+
+        .gf-profile-info-value {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            min-height: 52px;
+            padding: 13px 16px;
+            border: 1px solid #3a3b50;
+            border-radius: 10px;
+            background: #11121d;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .gf-profile-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #302448;
+            color: #c2aaff;
+            font-size: 11px;
+        }
+
+        .gf-profile-edit-area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-top: 25px;
+            margin-top: 27px;
+            border-top: 1px solid #303144;
+        }
+
+            .gf-profile-edit-area div {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .gf-profile-edit-area strong {
+                color: #ffffff;
+                font-size: 14px;
+            }
+
+            .gf-profile-edit-area span {
+                color: #a1a0b2;
+                font-size: 12px;
+            }
+
+        .gf-profile-save {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 0 23px;
+            border: 0;
+            border-radius: 9px;
+            background: #8050ed;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+            .gf-profile-save:hover {
+                background: #956df3;
+                color: #ffffff;
+            }
+
+        .gf-profile-danger-card {
+            border-color: #59303b;
+            background: #1c1923;
+        }
+
+        .gf-profile-danger-label {
+            color: #ed929a;
+        }
+
+        .gf-profile-danger-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #40232d;
+            color: #ff9aa2;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .gf-profile-danger-description {
+            max-width: 650px;
+            margin: 0;
+            color: #b1a9b5;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .gf-profile-danger-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-top: 22px;
+            margin-top: 20px;
+            border-top: 1px solid #45303b;
+        }
+
+            .gf-profile-danger-actions span {
+                color: #b1a9b5;
+                font-size: 12px;
+            }
+
+        .gf-profile-delete {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 43px;
+            padding: 0 19px;
+            border: 1px solid #a64b59;
+            border-radius: 9px;
+            background: #48232d;
+            color: #ffabb1;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+            .gf-profile-delete:hover {
+                background: #642d3a;
+                color: #ffffff;
+            }
+
+        .gf-profile-message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 850px;
+            padding: 15px 18px;
+            margin: 0 auto 22px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .gf-profile-success {
+            border: 1px solid #326d53;
+            background: #183528;
+            color: #a2e7c1;
+        }
+
+        .gf-profile-error {
+            border: 1px solid #8b3d49;
+            background: #3b2029;
+            color: #ffb0b6;
+        }
+
+        .gf-profile-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            max-width: 850px;
+            padding-top: 25px;
+            margin: 30px auto 0;
+            border-top: 1px solid #292a3b;
+            color: #858498;
+            font-size: 12px;
+        }
+
+            .gf-profile-footer span:first-child {
+                color: #b99cff;
+                font-weight: 800;
+                letter-spacing: 1px;
+            }
+
+        /* =================================
+                   ПОЛЕТА ЗА РЕДАКТИРАНЕ НА ПРОФИЛА
+                   ================================= */
+
+        .gf-profile-input {
+            display: block;
+            width: 100%;
+            min-height: 52px;
+            margin-top: 9px;
+            padding: 13px 16px;
+            border: 1px solid #3a3b50;
+            border-radius: 10px;
+            background: #11121d;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+            .gf-profile-input:focus {
+                border-color: #9875ff;
+                background: #11121d;
+                color: #ffffff;
+                box-shadow: 0 0 0 3px rgba(152, 117, 255, 0.15);
+            }
+
+            .gf-profile-input::placeholder {
+                color: #777386;
+            }
+
+            .gf-profile-input:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+        .gf-profile-validation-error {
+            display: block;
+            margin-top: 7px;
+            color: #ff777f;
+            font-size: 12px;
+        }
+
+        .gf-profile-validation-summary {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #8b3d49;
+            border-radius: 9px;
+            background: #3b2029;
+            color: #ffb0b6;
+            font-size: 13px;
+        }
+
+            .gf-profile-validation-summary:empty {
+                display: none;
+            }
+
+            .gf-profile-validation-summary ul {
+                margin: 0;
+                padding-left: 20px;
+            }
+
+                .gf-profile-validation-summary ul:empty {
+                    display: none;
+                }
+
+        .gf-profile-cancel {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 0 23px;
+            border: 1px solid #454458;
+            border-radius: 9px;
+            background: #242435;
+            color: #d8d3e5;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+            .gf-profile-cancel:hover {
+                border-color: #70618f;
+                background: #302b42;
+                color: #ffffff;
+            }
+
+        .gf-profile-edit-buttons {
+            display: flex;
+            align-items: center;
+            flex-direction: row !important;
+            gap: 12px !important;
+        }
+
+            .gf-profile-edit-buttons button {
+                font-family: inherit;
+            }
+
+        /* =================================
+                   МОБИЛНА ВЕРСИЯ
+                   ================================= */
+
+        @@media (max-width: 650px) {
+            .gf-profile-standalone {
+                padding: 30px 16px;
+            }
+
+            .gf-profile-heading {
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .gf-profile-avatar {
+                width: 58px;
+                height: 58px;
+                border-radius: 15px;
+                font-size: 24px;
+            }
+
+            .gf-profile-heading h1 {
+                font-size: 22px;
+            }
+
+            .gf-profile-card {
+                padding: 21px 17px;
+            }
+
+            .gf-profile-edit-area,
+            .gf-profile-danger-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .gf-profile-save,
+            .gf-profile-delete {
+                width: 100%;
+            }
+
+            .gf-profile-edit-buttons {
+                width: 100%;
+                flex-direction: column-reverse !important;
+            }
+
+                .gf-profile-edit-buttons .gf-profile-save,
+                .gf-profile-edit-buttons .gf-profile-cancel {
+                    width: 100%;
+                }
+
+            .gf-profile-footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body class="gf-profile-standalone-body">
+    <main class="gf-profile-standalone">
+        @RenderBody()
+    </main>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

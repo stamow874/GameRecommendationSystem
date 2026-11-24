@@ -1,73 +1,95 @@
 @page
-@model IndexModel
+@model GameRecommendationSystem.Areas.Identity.Pages.Account.Manage.IndexModel
 
 @{
+    Layout = "/Areas/Identity/Pages/Shared/_ProfileLayout.cshtml";
     ViewData["Title"] = "Моят профил";
-    ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<div class="gf-profile-page">
+<div class="gf-profile-shell">
 
-    <div class="gf-profile-header">
+    <a asp-page="/Index" asp-area="" class="gf-profile-back">
+        <span>←</span>
+        Назад към Хрумка
+    </a>
+
+    <header class="gf-profile-heading">
         <div class="gf-profile-avatar">
-            @(string.IsNullOrEmpty(Model.Username) ? "Х" : Model.Username.Substring(0, 1).ToUpper())
+            @(string.IsNullOrWhiteSpace(Model.Username) ? "Х" : Model.Username.Substring(0, 1).ToUpper())
         </div>
-        <div class="gf-profile-heading">
+
+        <div>
+            <span class="gf-profile-eyebrow">ТВОЯТ АКАУНТ</span>
             <h1>Настройки на профила</h1>
-            <p>Управлявай информацията за своя акаунт.</p>
+            <p>Управлявай личната си информация в Хрумка.</p>
         </div>
-    </div>
+    </header>
 
     <partial name="_StatusMessage" for="StatusMessage" />
 
-    <div class="gf-profile-card">
+    <div class="gf-profile-content">
+        <form id="profile-form" method="post" class="gf-profile-details">
 
-        <div class="gf-profile-card-heading">
-            <div>
-                <h2>Лична информация</h2>
-                <p>Преглед и редактиране на данните ти.</p>
-            </div>
-        </div>
-
-        <form id="profile-form" method="post">
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="gf-profile-section">
-                <div class="gf-profile-section-title">
-                    <span>01</span>
-                    Данни за акаунта
+            <section class="gf-profile-card">
+                <div class="gf-profile-card-heading">
+                    <div>
+                        <span class="gf-profile-section-label">ОСНОВНА ИНФОРМАЦИЯ</span>
+                        <h2>Данни за акаунта</h2>
+                        <p>Това е информацията, свързана с твоя профил.</p>
+                    </div>
+                    <span class="gf-profile-card-icon">👤</span>
                 </div>
 
                 <div class="gf-profile-field">
                     <label asp-for="Username">Потребителско име</label>
-                    <input asp-for="Username" class="form-control" disabled />
-                    <small>Това е името, с което влизаш в Хрумка. Не може да бъде променяно от тази страница.</small>
+                    <input asp-for="Username" class="gf-profile-input" disabled />
+                    <span class="gf-profile-help">Не може да бъде променяно от тази страница.</span>
                 </div>
-            </div>
+            </section>
 
-            <div class="gf-profile-section">
-                <div class="gf-profile-section-title">
-                    <span>02</span>
-                    Данни за контакт
+            <section class="gf-profile-card">
+                <div class="gf-profile-card-heading">
+                    <div>
+                        <span class="gf-profile-section-label">КОНТАКТ</span>
+                        <h2>Информация за връзка</h2>
+                        <p>Можеш да актуализираш телефонния си номер.</p>
+                    </div>
+                    <span class="gf-profile-card-icon">✉</span>
                 </div>
 
                 <div class="gf-profile-field">
-                    <label asp-for="Input.PhoneNumber">Телефонен номер</label>
-                    <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Въведи телефонен номер" />
-                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                    <small>Можеш да редактираш този номер по всяко време.</small>
-                </div>
-            </div>
+                    <div class="gf-profile-label-line">
+                        <label asp-for="Input.PhoneNumber">Телефонен номер</label>
+                        <span class="gf-profile-editable">Редактируемо поле</span>
+                    </div>
 
-            <div class="gf-profile-actions">
-                <button id="update-profile-button" type="submit" class="gf-profile-save">
+                    <input asp-for="Input.PhoneNumber"
+                           class="gf-profile-input"
+                           placeholder="Въведи телефонен номер" />
+
+                    <span asp-validation-for="Input.PhoneNumber" class="gf-profile-validation"></span>
+                    <span class="gf-profile-help">Въведи актуален номер или остави полето празно.</span>
+                </div>
+            </section>
+
+            <div class="gf-profile-save-area">
+                <div>
+                    <strong>Запазване на промените</strong>
+                    <span>Промените ще бъдат приложени към твоя акаунт.</span>
+                </div>
+
+                <button type="submit" id="update-profile-button" class="gf-profile-save">
                     Запази промените
                 </button>
             </div>
 
         </form>
     </div>
+
+    <footer class="gf-profile-footer">
+        <span>Хрумка</span>
+        <span>Твоят свят от игри.</span>
+    </footer>
 </div>
 
 @section Scripts {

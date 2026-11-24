@@ -3,83 +3,124 @@
 
 @{
     ViewData["Title"] = "Моят профил";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
 }
 
-<div class="profile-page">
+<div class="gf-profile-shell">
 
-    <div class="profile-header">
-        <div class="profile-avatar">
-            @(Model.UserName?.Substring(0, 1).ToUpper() ?? "U")
+    <a asp-controller="Home" asp-action="Index" class="gf-profile-back">
+        <span>←</span>
+        Назад към Хрумка
+    </a>
+
+    <header class="gf-profile-heading">
+        <div class="gf-profile-avatar">
+            @(string.IsNullOrWhiteSpace(Model.UserName) ? "Х" : Model.UserName.Substring(0, 1).ToUpper())
         </div>
 
         <div>
+            <span class="gf-profile-eyebrow">ТВОЯТ АКАУНТ</span>
             <h1>Моят профил</h1>
-            <p>Управлявай информацията за своя акаунт в Хрумка.</p>
+            <p>Управлявай личната си информация и настройките на своя акаунт.</p>
         </div>
-    </div>
+    </header>
 
     @if (TempData["ProfileMessage"] != null)
     {
-        <div class="alert alert-success">
+        <div class="gf-profile-message gf-profile-success">
+            <span>✓</span>
             @TempData["ProfileMessage"]
         </div>
     }
 
     @if (TempData["ProfileError"] != null)
     {
-        <div class="alert alert-danger">
+        <div class="gf-profile-message gf-profile-error">
+            <span>!</span>
             @TempData["ProfileError"]
         </div>
     }
 
-    <div class="profile-card">
+    <div class="gf-profile-content">
 
-        <h2>Информация за акаунта</h2>
+        <main class="gf-profile-details">
 
-        <div class="profile-info-group">
-            <label>Потребителско име</label>
+            <section class="gf-profile-card">
+                <div class="gf-profile-card-heading">
+                    <div>
+                        <span class="gf-profile-section-label">ЛИЧНИ ДАННИ</span>
+                        <h2>Информация за акаунта</h2>
+                        <p>Основната информация, свързана с твоя профил.</p>
+                    </div>
 
-            <div class="profile-info-value">
-                @Model.UserName
-            </div>
-        </div>
+                    <span class="gf-profile-card-icon">👤</span>
+                </div>
 
-        <div class="profile-info-group">
-            <label>Имейл адрес</label>
+                <div class="gf-profile-field">
+                    <label>Потребителско име</label>
+                    <div class="gf-profile-info-value">
+                        <span>@Model.UserName</span>
+                        <span class="gf-profile-status">Активен профил</span>
+                    </div>
+                    <span class="gf-profile-help">Името, с което използваш Хрумка.</span>
+                </div>
 
-            <div class="profile-info-value">
-                @Model.Email
-            </div>
-        </div>
+                <div class="gf-profile-field gf-profile-field-spaced">
+                    <label>Имейл адрес</label>
+                    <div class="gf-profile-info-value">
+                        <span>@Model.Email</span>
+                        <span class="gf-profile-status">Имейл</span>
+                    </div>
+                    <span class="gf-profile-help">Имейл адресът, свързан с твоя акаунт.</span>
+                </div>
 
-        <div class="profile-actions">
-            <a asp-controller="Profile"
-               asp-action="Edit"
-               class="profile-edit-button">
-                Редактирай профила
-            </a>
-        </div>
+                <div class="gf-profile-edit-area">
+                    <div>
+                        <strong>Искаш да промениш информацията си?</strong>
+                        <span>Отвори настройките за редактиране на профила.</span>
+                    </div>
 
+                    <a asp-controller="Profile"
+                       asp-action="Edit"
+                       class="gf-profile-save">
+                        Редактирай профила
+                    </a>
+                </div>
+            </section>
+
+            <section class="gf-profile-card gf-profile-danger-card">
+                <div class="gf-profile-card-heading">
+                    <div>
+                        <span class="gf-profile-section-label gf-profile-danger-label">ЗОНА С ПОВИШЕНО ВНИМАНИЕ</span>
+                        <h2>Изтриване на акаунт</h2>
+                        <p>Управление на съществуването на твоя профил.</p>
+                    </div>
+
+                    <span class="gf-profile-danger-icon">!</span>
+                </div>
+
+                <p class="gf-profile-danger-description">
+                    Изтриването на акаунта е необратимо действие. Възможно е да загубиш
+                    профила си, любимите игри, ревютата и историята на препоръките.
+                </p>
+
+                <div class="gf-profile-danger-actions">
+                    <span>Това действие не може да бъде отменено.</span>
+
+                    <a asp-controller="Profile"
+                       asp-action="Delete"
+                       class="gf-profile-delete">
+                        Изтрий акаунта
+                    </a>
+                </div>
+            </section>
+
+        </main>
     </div>
 
-    <div class="profile-card profile-danger-card">
-
-        <h2>Изтриване на акаунт</h2>
-
-        <p>
-            Изтриването на акаунта е необратимо действие.
-            Ще загубиш профила си, любимите игри, ревютата
-            и историята на препоръките.
-        </p>
-
-        <div class="profile-actions">
-            <a asp-controller="Profile"
-               asp-action="Delete"
-               class="profile-delete-button">
-                Изтрий акаунта
-            </a>
-        </div>
-
-    </div>
+    <footer class="gf-profile-footer">
+        <span>ХРУМКА</span>
+        <span>Твоят свят от игри.</span>
+    </footer>
 
 </div>

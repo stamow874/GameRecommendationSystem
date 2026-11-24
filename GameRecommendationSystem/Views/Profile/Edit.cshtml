@@ -2,67 +2,121 @@
 
 @{
     ViewData["Title"] = "Редактиране на профила";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
 }
 
-<div class="profile-page">
-    <div class="profile-header">
-        <div class="profile-avatar">
-            @(Model.UserName?.Substring(0, 1).ToUpper() ?? "U")
+<div class="gf-profile-shell">
+
+    <a asp-controller="Profile"
+       asp-action="Index"
+       class="gf-profile-back">
+        <span>←</span>
+        Назад към профила
+    </a>
+
+    <header class="gf-profile-heading">
+        <div class="gf-profile-avatar">
+            @(string.IsNullOrWhiteSpace(Model.UserName)
+                ? "Х"
+                : Model.UserName.Substring(0, 1).ToUpper())
         </div>
 
         <div>
+            <span class="gf-profile-eyebrow">НАСТРОЙКИ НА АКАУНТА</span>
             <h1>Редактиране на профила</h1>
-            <p>Промени информацията за своя акаунт.</p>
+            <p>Промени личната информация, свързана с твоя акаунт в Хрумка.</p>
         </div>
+    </header>
+
+    <div class="gf-profile-content">
+        <main class="gf-profile-details">
+
+            <section class="gf-profile-card">
+
+                <div class="gf-profile-card-heading">
+                    <div>
+                        <span class="gf-profile-section-label">ЛИЧНИ ДАННИ</span>
+                        <h2>Данни за акаунта</h2>
+                        <p>Актуализирай информацията, с която използваш Хрумка.</p>
+                    </div>
+
+                    <span class="gf-profile-card-icon">✎</span>
+                </div>
+
+                <form asp-controller="Profile"
+                      asp-action="Edit"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="gf-profile-validation-summary"
+                         role="alert">
+                    </div>
+
+                    <div class="gf-profile-field">
+                        <label asp-for="UserName">Потребителско име</label>
+
+                        <input asp-for="UserName"
+                               class="gf-profile-input"
+                               autocomplete="username"
+                               placeholder="Въведи потребителско име" />
+
+                        <span asp-validation-for="UserName"
+                              class="gf-profile-validation-error">
+                        </span>
+
+                        <span class="gf-profile-help">
+                            Това е името, което ще се показва в твоя профил.
+                        </span>
+                    </div>
+
+                    <div class="gf-profile-field gf-profile-field-spaced">
+                        <label asp-for="Email">Имейл адрес</label>
+
+                        <input asp-for="Email"
+                               class="gf-profile-input"
+                               autocomplete="email"
+                               placeholder="Въведи имейл адрес" />
+
+                        <span asp-validation-for="Email"
+                              class="gf-profile-validation-error">
+                        </span>
+
+                        <span class="gf-profile-help">
+                            Използвай имейл адрес, до който имаш достъп.
+                        </span>
+                    </div>
+
+                    <div class="gf-profile-edit-area">
+                        <div>
+                            <strong>Готов ли си с промените?</strong>
+                            <span>Запази информацията или се върни без промени.</span>
+                        </div>
+
+                        <div class="gf-profile-edit-buttons">
+                            <a asp-controller="Profile"
+                               asp-action="Index"
+                               class="gf-profile-cancel">
+                                Отказ
+                            </a>
+
+                            <button type="submit"
+                                    class="gf-profile-save">
+                                Запази промените
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+
+        </main>
     </div>
 
-    <div class="profile-card">
-        <h2>Данни за акаунта</h2>
+    <footer class="gf-profile-footer">
+        <span>ХРУМКА</span>
+        <span>Твоят свят от игри.</span>
+    </footer>
 
-        <form asp-controller="Profile"
-              asp-action="Edit"
-              method="post">
-
-            <div asp-validation-summary="ModelOnly"
-                 class="text-danger mb-3"
-                 role="alert"></div>
-
-            <div class="profile-info-group">
-                <label asp-for="UserName"></label>
-
-                <input asp-for="UserName"
-                       class="form-control"
-                       autocomplete="username" />
-
-                <span asp-validation-for="UserName"
-                      class="text-danger"></span>
-            </div>
-
-            <div class="profile-info-group">
-                <label asp-for="Email"></label>
-
-                <input asp-for="Email"
-                       class="form-control"
-                       autocomplete="email" />
-
-                <span asp-validation-for="Email"
-                      class="text-danger"></span>
-            </div>
-
-            <div class="profile-actions">
-                <button type="submit"
-                        class="profile-edit-button">
-                    Запази промените
-                </button>
-
-                <a asp-controller="Profile"
-                   asp-action="Index"
-                   class="profile-cancel-button">
-                    Отказ
-                </a>
-            </div>
-        </form>
-    </div>
 </div>
 
 @section Scripts {
