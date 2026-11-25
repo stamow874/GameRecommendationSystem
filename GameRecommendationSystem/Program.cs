@@ -1,4 +1,4 @@
-
+using GameRecommendationSystem.Services;
 using GameRecommendationSystem.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +13,8 @@ var connectionString = builder.Configuration
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddHttpClient<SteamService>();
 
 builder.Services
     .AddDefaultIdentity<ApplicationUser>(options =>

@@ -1,0 +1,447 @@
+﻿@model GameRecommendationSystem.Data.ApplicationUser
+
+@{
+    ViewData["Title"] = "Свързване със Steam";
+}
+
+<div class="steam-page">
+    <div class="steam-container">
+        <div class="steam-header">
+            <div class="steam-icon">◉</div>
+            <h1>Свързване със Steam</h1>
+            <p>Свържи своя Steam профил с Хрумка и получи персонализирани препоръки според игрите, които притежаваш.</p>
+        </div>
+
+        @if (TempData["SteamSuccess"] is string success)
+        {
+            <div class="steam-message steam-success">@success</div>
+        }
+
+        @if (TempData["SteamError"] is string error)
+        {
+            <div class="steam-message steam-error">@error</div>
+        }
+
+        <div id="steam-popup-message" class="steam-message" hidden></div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.SteamId))
+        {
+            <div class="steam-status">
+                <div class="steam-status-indicator"></div>
+                <div>
+                    <strong>Steam профилът е свързан</strong>
+                    <p>Твоят Steam акаунт е успешно свързан с Хрумка.</p>
+                </div>
+            </div>
+
+            <div class="steam-details">
+                <div>
+                    <span>Steam ID</span>
+                    <strong>@Model.SteamId</strong>
+                </div>
+                <div>
+                    <span>Дата на свързване</span>
+                    <strong>@(Model.SteamConnectedAt?.ToLocalTime().ToString("dd.MM.yyyy HH:mm") ?? "Няма информация")</strong>
+                </div>
+                <div>
+                    <span>Последна синхронизация</span>
+                    <strong>@(Model.SteamLastSyncedAt?.ToLocalTime().ToString("dd.MM.yyyy HH:mm") ?? "Все още няма")</strong>
+                </div>
+            </div>
+
+            <form asp-controller="Steam" asp-action="Sync" method="post" class="steam-sync-form">
+                <button type="submit" class="steam-sync-button">
+                    <span>↻</span>
+                    Синхронизирай сега
+                </button>
+            </form>
+
+            <a class="steam-profile-link"
+               href="@Model.SteamProfileUrl"
+               target="_blank"
+               rel="noopener noreferrer">
+                Отвори Steam профила
+            </a>
+
+            <div class="steam-management">
+                <h3>Управление на Steam профила</h3>
+
+                <form asp-controller="Steam"
+                      asp-action="Disconnect"
+                      method="post"
+                      id="steam-disconnect-form">
+                    <button type="submit" class="steam-disconnect-button">
+                        Излез от Steam профила
+                    </button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="steam-status steam-not-connected">
+                <div class="steam-status-indicator"></div>
+                <div>
+                    <strong>Няма свързан Steam профил</strong>
+                    <p>Все още не си свързал своя Steam акаунт.</p>
+                </div>
+            </div>
+
+            <div class="steam-information">
+                <h3>Какво ще получиш?</h3>
+                <ul>
+                    <li>Достъп до информация за игрите в твоята Steam библиотека.</li>
+                    <li>Персонализирани препоръки според притежаваните игри.</li>
+                    <li>Възможност за синхронизиране на библиотеката.</li>
+                </ul>
+            </div>
+
+            <button type="button"
+                    id="steam-connect-button"
+                    class="steam-connect-button">
+                <span>◉</span>
+                Свържи Steam профил
+            </button>
+
+            <p class="steam-security">
+                Хрумка няма да изисква или съхранява твоята Steam парола.
+            </p>
+        }
+    </div>
+</div>
+
+<style>
+    .steam-page {
+        display: flex;
+        justify-content: center;
+        padding: 50px 25px;
+        color: #fff;
+    }
+
+    .steam-container {
+        width: 100%;
+        max-width: 720px;
+        padding: 35px;
+        background: #171827;
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 18px;
+    }
+
+    .steam-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .steam-icon {
+        font-size: 42px;
+        color: #a78bfa;
+        margin-bottom: 12px;
+    }
+
+    .steam-header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .steam-header p {
+        color: #a5a6b5;
+        line-height: 1.7;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+
+    .steam-status {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 18px;
+        background: rgba(34,197,94,.08);
+        border: 1px solid rgba(34,197,94,.2);
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .steam-not-connected {
+        background: rgba(234,179,8,.07);
+        border-color: rgba(234,179,8,.2);
+    }
+
+    .steam-status-indicator {
+        width: 11px;
+        height: 11px;
+        flex-shrink: 0;
+        margin-top: 5px;
+        border-radius: 50%;
+        background: #22c55e;
+    }
+
+    .steam-not-connected .steam-status-indicator {
+        background: #eab308;
+    }
+
+    .steam-status strong {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .steam-status p {
+        color: #a5a6b5;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .steam-information {
+        padding: 22px;
+        background: #202235;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+        .steam-information h3 {
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .steam-information ul {
+            padding-left: 20px;
+            margin: 0;
+            color: #b9bac8;
+            line-height: 2;
+        }
+
+    .steam-connect-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 15px;
+        background: #6554c0;
+        color: #fff;
+        border: none;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: .2s;
+        cursor: pointer;
+    }
+
+        .steam-connect-button:hover {
+            background: #7968d8;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+    .steam-security {
+        text-align: center;
+        color: #9293a4;
+        font-size: 12px;
+        margin: 16px 0 0;
+    }
+
+    .steam-details {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+        .steam-details div {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px;
+            background: #202235;
+            border-radius: 9px;
+        }
+
+        .steam-details span {
+            color: #a5a6b5;
+        }
+
+        .steam-details strong {
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+    .steam-sync-form {
+        margin-bottom: 12px;
+    }
+
+    .steam-sync-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 15px;
+        background: #22a06b;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background .2s, transform .2s;
+    }
+
+        .steam-sync-button:hover {
+            background: #28b77a;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+    .steam-profile-link {
+        display: block;
+        text-align: center;
+        padding: 14px;
+        color: #fff;
+        background: #6554c0;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+        .steam-profile-link:hover {
+            background: #7968d8;
+            color: #fff;
+        }
+
+    .steam-management {
+        margin-top: 30px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+        .steam-management h3 {
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+    .steam-disconnect-button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: .2s;
+        background: #a83e4b;
+    }
+
+        .steam-disconnect-button:hover {
+            background: #c34b59;
+        }
+
+    .steam-message {
+        padding: 14px;
+        border-radius: 9px;
+        margin-bottom: 20px;
+    }
+
+    .steam-success {
+        color: #86efac;
+        background: rgba(34,197,94,.1);
+        border: 1px solid rgba(34,197,94,.2);
+    }
+
+    .steam-error {
+        color: #fca5a5;
+        background: rgba(239,68,68,.1);
+        border: 1px solid rgba(239,68,68,.2);
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+
+    @@media (max-width: 600px) {
+        .steam-container {
+            padding: 22px;
+        }
+
+        .steam-header h1 {
+            font-size: 23px;
+        }
+
+        .steam-details div {
+            flex-direction: column;
+        }
+
+        .steam-details strong {
+            text-align: left;
+        }
+    }
+</style>
+
+<script>
+    const steamPopups = new Set();
+    const steamConnectButton = document.getElementById("steam-connect-button");
+    const steamPopupMessage = document.getElementById("steam-popup-message");
+    const steamConnectUrl = '@Url.Action("Connect", "Steam", new { popup = true })';
+
+    function showSteamPopupMessage(message: string, success: boolean) {
+        if (!steamPopupMessage) {
+            return;
+        }
+
+        steamPopupMessage.hidden = false;
+        steamPopupMessage.textContent = message;
+        steamPopupMessage.className = success
+            ? "steam-message steam-success"
+            : "steam-message steam-error";
+    }
+
+    if (steamConnectButton) {
+        steamConnectButton.addEventListener("click", function () {
+            const popup = window.open(
+                steamConnectUrl,
+                "SteamLogin",
+                "width=800,height=700"
+            );
+
+            if (!popup) {
+                showSteamPopupMessage(
+                    "Браузърът блокира изскачащия прозорец. Разреши изскачащите прозорци за този сайт и опитай отново.",
+                    false
+                );
+                return;
+            }
+
+            steamPopups.add(popup);
+        });
+    }
+
+    window.addEventListener("message", function (event) {
+        if (event.origin !== window.location.origin || !steamPopups.has(event.source)) {
+            return;
+        }
+
+        const data = event.data;
+
+        if (!data || data.type !== "hrumka-steam") {
+            return;
+        }
+
+        showSteamPopupMessage(data.message, data.success);
+
+        steamPopups.delete(event.source);
+
+        if (data.success) {
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
+        }
+    });
+
+    const steamDisconnectForm = document.getElementById("steam-disconnect-form");
+
+    if (steamDisconnectForm) {
+        steamDisconnectForm.addEventListener("submit", function (event) {
+            if (!confirm("Сигурен ли си, че искаш да излезеш от Steam профила? Steam връзката и синхронизираните игри ще бъдат премахнати от Хрумка.")) {
+                event.preventDefault();
+            }
+        });
+    }
+</script>

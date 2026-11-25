@@ -26,6 +26,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<FavoriteGame> FavoriteGames => Set<FavoriteGame>();
     public DbSet<RecommendationHistory> RecommendationHistories => Set<RecommendationHistory>();
     public DbSet<Publisher> Publishers => Set<Publisher>();
+    public DbSet<UserSteamGame> UserSteamGames => Set<UserSteamGame>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -162,5 +163,15 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany(x => x.Games)
             .HasForeignKey(x => x.PublisherId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<UserSteamGame>()
+            .HasIndex(x => new { x.UserId, x.AppId })
+            .IsUnique();
+ 
+        builder.Entity<UserSteamGame>()
+            .HasOne<ApplicationUser>()
+            .WithMany()
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
